@@ -25,7 +25,7 @@ public class ThemeActivity extends AppCompatActivity {
     private Support support;
 
     private final String[] themes = new String[] {"Светлая",
-            "Тёмная", "По расписанию", "Системная"};
+            "Тёмная", /*"По расписанию", "Системная"*/};
 
     private int backgroundColor;
     private int fontColor = Color.BLACK;
