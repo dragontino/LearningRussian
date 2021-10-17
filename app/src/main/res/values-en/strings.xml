@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Learning Russian</string>
+    <string name="tab_1"><i>Learning</i></string>
+    <string name="tab_2"><i>Quiz</i></string>
+
+    <!--Экран настроек-->
+    <string name="switch_checked"><i>Auto</i>-update of words in the theory section</string>
+    <string name="switch_unchecked"><i>Manual</i> updating of words in the theory section</string>
+    <string name="textView1">Word refresh rate (in milliseconds)</string>
+    <string name="please_set_value">Please enter a value</string>
+    <string name="lim_of_time">The value must be between %1$s ms and %1$s ms.</string>
+    <string name="textView2">The number of questions in the test section</string>
+    <string name="lim_of_questions">The number of questions must be from %1$s to %1$s</string>
+    <string name="theme_night">App theme</string>
+    <string name="button_language_text">🌎 Language</string>
+    <string name="settings_saved">Settings saved!</string>
+
+    <!--Экран "О приложении"-->
+    <string name="version">Version <b>5.6.0</b>%1$sof <i>august 26, 2021</i></string>
+    <string name="vk"><b><i>Contact the developer:</i></b> <a href="https://vk.com/cepetroff"><b>VK</b></a>
+        \n<a href="https://t.me/cepetroff"><b>Telegram</b></a></string>
+    <string name="mail">petrovsd2002@gmail.com</string>
+
+    <!--Кнопки и надписи на экране упражнения-->
+    <string name="btn_start">Start</string>
+    <string name="btn_continue">Continue</string>
+
+    <string name="assent_test_text">Choose a word that has the correct accent:</string>
+    <string name="paronym_test_text">Insert the missing word:</string>
+    <string name="time_is_over">Time is over!</string>
+    <string name="score">Question №%1$d/%2$d\nYour current score: %3$d/%4%d</string>
+    <string name="end_game">Congratulations, you scored %1$d out of %3$d %2$s</string>
+    <string name="great_results">"\nThis is the best result for today! You are smart!"</string>
+    <string name="one_point">point</string>
+    <string name="ten_points">points</string>
+    <string name="two_points">points</string>
+
+    <!--Лейблы-->
+    <string name="assent_label">Pronunciation</string>
+    <string name="suffix_label">Suffixes</string>
+    <string name="settings_title">Settings</string>
+    <string name="paronym_label">Paronyms</string>
+    <string name="library_label">Pronunciation dictionary</string>
+    <string name="language_label">Language</string>
+    <string name="about_title"><b>About</b></string>
+
+    <string name="menu_item_get_back">Get back</string>
+    <string name="menu_item_list_words">Knowledge Library</string>
+    <string name="not_completed_section">This section is still incomplete ¯\\_(ツ)_/¯</string>
+    <string name="main_label">Main menu</string>
+</resources>

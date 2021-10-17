@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/assent">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.learning.ruslan.activities.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <activity
+        android:id="@+id/assent"
+        android:name="com.learning.ruslan.activities.DoubleFragmentActivity"
+        android:label="activity_fragment"
+        tools:layout="@layout/activity_fragment" />
+    <activity
+        android:id="@+id/suffix"
+        android:name="com.learning.ruslan.activities.DoubleFragmentActivity"
+        android:label="activity_fragment"
+        tools:layout="@layout/activity_fragment" />
+
+    <activity
+        android:id="@+id/paronym"
+        android:name="com.learning.ruslan.activities.DoubleFragmentActivity"
+        android:label="activity_fragment"
+        tools:layout="@layout/activity_fragment" />
+</navigation>

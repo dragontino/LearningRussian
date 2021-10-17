@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AboutActivity">
+
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:text="@string/about_title"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/textView_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="20sp"
+        android:alpha="0.7"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="238dp"/>
+
+    <TextView
+        android:id="@+id/textView_vk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vk"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColorLink="@color/purple_200_light"/>
+
+    <TextView
+        android:id="@+id/textView_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mail"
+        android:gravity="center"
+        android:linksClickable="true"
+        android:autoLink="email"
+        android:textSize="25sp"
+        android:textColorLink="@color/purple_200_light"/>
+</LinearLayout>
