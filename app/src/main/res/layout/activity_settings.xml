@@ -105,9 +105,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layout_margin"
                 android:gravity="center"
-                android:text="@string/theme_night"
+                android:text="@string/theme_label"
                 android:textSize="@dimen/text_size"
-                android:theme="@style/TextAppearance.AppCompat.Title"/>
+                android:clickable="true"
+                android:focusable="true" />
 
             <Button
                 android:id="@+id/buttonLanguage"
