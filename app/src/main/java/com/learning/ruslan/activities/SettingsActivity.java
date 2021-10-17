@@ -262,11 +262,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        exitToast.cancel();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        exitToast.cancel();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
