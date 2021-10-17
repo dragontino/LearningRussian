@@ -1,6 +1,7 @@
 package com.learning.ruslan.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -18,7 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StyleRes;
@@ -32,12 +32,12 @@ import com.learning.ruslan.Word;
 
 import static com.learning.ruslan.Support.MAX_TIME;
 import static com.learning.ruslan.Support.MIN_TIME;
-import static com.learning.ruslan.Support.THEME_LIGHT;
 import static com.learning.ruslan.Support.THEME_NIGHT;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private SwitchCompat switchCompat, switchTheme;
+    private SwitchCompat switchCompat;
+    private TextView switchTheme;
     private TextView textView, textView2;
     private EditText editText, editText2;
     private Button buttonLanguage;
@@ -45,9 +45,19 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private Support support;
     private Menu menu;
     private boolean isSettingsChanged = false;
+    private String theme;
+    private Toast exitToast;
 
     private int MAX_QUESTIONS;
     private static final int MIN_QUESTIONS = 10;
+    private static final String INTENT_NAME = "SettingsActivity.typeId";
+
+
+    public static Intent newIntent(Context context, int typeId) {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        intent.putExtra(INTENT_NAME, typeId);
+        return intent;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint({"SetTextI18n", "StringFormatMatches"})
@@ -55,6 +65,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        exitToast = Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT);
 
         switchCompat = findViewById(R.id.switchCompat);
         textView = findViewById(R.id.textView1);
@@ -73,7 +85,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         if (support.getQuestions() > MAX_QUESTIONS) support.setQuestions(MAX_QUESTIONS);
 
+        theme = support.getTheme();
+
         buttonLanguage.setOnClickListener(this);
+        switchTheme.setOnClickListener(this);
 
         switchChecked(support.getChecked());
         editText.setText(String.valueOf(support.getPause()));
@@ -183,12 +198,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             switchChecked(isChecked);
             isSettingsChanged = true;
         });
-
-
-        if (switchTheme != null) switchTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            switchTheme(isChecked);
-            isSettingsChanged = true;
-        });
     }
 
 
@@ -214,15 +223,17 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private void switchTheme(boolean isChecked) {
-        switchTheme.setChecked(isChecked);
-        if (isChecked) {
-            support.setTheme(Support.THEME_NIGHT);
+    private void updateTheme() {
+
+        if (!theme.equals(support.getTheme()))
+            isSettingsChanged = true;
+
+        theme = support.getTheme();
+
+        if (theme.equals(THEME_NIGHT))
             changeTextColor(Color.WHITE, R.style.SwitchNight);
-        } else {
-            support.setTheme(Support.THEME_LIGHT);
+        else
             changeTextColor(Color.BLACK, R.style.SwitchLight);
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
                 menu != null) {
@@ -235,30 +246,26 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void updateTheme() {
-
-        switch (support.getTheme()) {
-            case THEME_LIGHT:
-                switchTheme(false);
-                break;
-            case THEME_NIGHT:
-                switchTheme(true);
-                break;
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTheme();
     }
-
 
     @Override
     protected void onStop() {
         super.onStop();
         if (isSettingsChanged) {
             save_data();
-            Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT).show();
+            exitToast.show();
             isSettingsChanged = false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        exitToast.cancel();
     }
 
     @Override
@@ -341,10 +348,16 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.buttonLanguage) {
-            startActivity(new Intent(this, LanguageActivity.class));
+        switch (v.getId()) {
+            case R.id.buttonLanguage:
+                startActivity(new Intent(this, LanguageActivity.class));
+                break;
+            case R.id.switchTheme:
+                startActivity(new Intent(this, ThemeActivity.class));
+                break;
         }
     }
 }

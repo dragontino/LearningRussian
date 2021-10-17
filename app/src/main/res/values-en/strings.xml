@@ -12,12 +12,12 @@
     <string name="lim_of_time">The value must be between %1$s ms and %1$s ms.</string>
     <string name="textView2">The number of questions in the test section</string>
     <string name="lim_of_questions">The number of questions must be from %1$s to %1$s</string>
-    <string name="theme_night">App theme</string>
+    <string name="theme_label">App theme</string>
     <string name="button_language_text">🌎 Language</string>
     <string name="settings_saved">Settings saved!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Version <b>5.6.0</b>%1$sof <i>august 26, 2021</i></string>
+    <string name="version">Version <b>5.6.1</b>%1$sof <i>october 17, 2021</i></string>
     <string name="vk"><b><i>Contact the developer:</i></b> <a href="https://vk.com/cepetroff"><b>VK</b></a>
         \n<a href="https://t.me/cepetroff"><b>Telegram</b></a></string>
     <string name="mail">petrovsd2002@gmail.com</string>
@@ -49,4 +49,5 @@
     <string name="menu_item_list_words">Knowledge Library</string>
     <string name="not_completed_section">This section is still incomplete ¯\\_(ツ)_/¯</string>
     <string name="main_label">Main menu</string>
+    <string name="search_label">Search</string>
 </resources>

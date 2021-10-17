@@ -81,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_item_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }
+        if (item.getItemId() == R.id.menu_item_settings)
+            startActivity(SettingsActivity.newIntent(this, Word.AssentId));
         return super.onOptionsItemSelected(item);
     }
 

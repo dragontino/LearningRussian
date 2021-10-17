@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ИзучаемРоднойЯзык">
         <activity
+            android:name=".activities.ThemeActivity"
+            android:label="@string/theme_label"
+            android:theme="@style/AlertDialogCustom"/>
+        <activity
             android:name=".activities.LanguageActivity"
             android:label="@string/language_label"
             android:theme="@style/AlertDialogCustom" />

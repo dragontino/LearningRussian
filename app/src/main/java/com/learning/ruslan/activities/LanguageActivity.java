@@ -141,7 +141,7 @@ public class LanguageActivity extends AppCompatActivity {
 
         private void onClick(View view) {
             Toast.makeText(getApplicationContext(), "Выбран язык " + mTextView.getText(), Toast.LENGTH_SHORT).show();
-            support.setLanguage(Support.languages[position]);
+            support.setLanguage(position);
             finish();
         }
     }

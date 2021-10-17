@@ -95,8 +95,7 @@ public class DoubleFragmentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                startActivity(SettingsActivity.newIntent(this, typeId));
                 return true;
             case R.id.menu_item_list_words:
                 startActivity(LibraryActivity.newIntent(this, typeId));

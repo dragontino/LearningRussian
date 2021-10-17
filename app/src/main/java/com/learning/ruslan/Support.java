@@ -222,8 +222,8 @@ public class Support {
         return mSettings.getQuestions();
     }
 
-    public void setLanguage(String language) {
-        this.mSettings.setLanguage(language);
+    public void setLanguage(int position) {
+        mSettings.setLanguage(languages[position]);
         updateSupport(mSettings);
     }
 
