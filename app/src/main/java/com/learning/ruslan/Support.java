@@ -20,7 +20,6 @@ import android.view.Window;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;

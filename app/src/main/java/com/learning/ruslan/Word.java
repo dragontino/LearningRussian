@@ -6,23 +6,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.text.style.TypefaceSpan;
 import android.util.Log;
-import android.util.Pair;
-import android.widget.Toast;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.learning.ruslan.databases.RusBaseHelper;
 import com.learning.ruslan.databases.RusDbSchema.AssentTable;
