@@ -12,11 +12,11 @@ public class Suffix extends Task {
         this(0, word, position, alternative_letter);
     }
 
-    public void set(String word, int position, String alternative_letter) {
-        setWord(word);
-        setPosition(position);
-        setAlternative(alternative_letter);
-    }
+//    public void set(String word, int position, String alternative_letter) {
+//        setWord(word);
+//        setPosition(position);
+//        setAlternative(alternative_letter);
+//    }
 
 
 

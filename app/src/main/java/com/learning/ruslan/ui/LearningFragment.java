@@ -71,6 +71,8 @@ public class LearningFragment extends Fragment implements View.OnClickListener {
         Point size = new Point();
         display.getSize(size);
         screenHeight = size.y;
+
+        word.uploadWords(typeId);
     }
 
 

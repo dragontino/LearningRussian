@@ -99,7 +99,7 @@
                 android:min="10"
                 tools:targetApi="o" />
 
-            <TextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,8 +107,7 @@
                 android:gravity="center"
                 android:text="@string/theme_label"
                 android:textSize="@dimen/text_size"
-                android:clickable="true"
-                android:focusable="true" />
+                android:theme="@style/SwitchLight"/>
 
             <Button
                 android:id="@+id/buttonLanguage"

@@ -6,17 +6,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.Toast;
 
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
-import com.learning.ruslan.databases.Paronym;
 import com.learning.ruslan.databases.RusBaseHelper;
-import com.learning.ruslan.databases.RusDbSchema;
 import com.learning.ruslan.databases.RusDbSchema.AssentTable;
 import com.learning.ruslan.databases.RusDbSchema.ParonymTable;
 import com.learning.ruslan.databases.RusDbSchema.SuffixTable;
@@ -192,8 +200,8 @@ public class Word {
             "слышИмый", "опасаЕшься", "потратИвший"};
 
     private final String[] ParonymWords = new String[] {
-            "абонемент", "", "абонемент в театр", "абонемент на цикл лекций", "межбиблиотечный абонемент",
-                    "абонемент на кинофестиваль", "абонемент в бассейн", "", "абонент", "\n"
+            "абонемент:абонемент в театр|абонемент на цикл лекций|межбиблиотечный абонемент|" +
+                    "абонемент на кинофестиваль|абонемент в бассейн:абонент"
     };
 
     private static Word sWord;
@@ -211,7 +219,12 @@ public class Word {
         this.mDatabase = new RusBaseHelper(mContext).getWritableDatabase();
     }
 
-    private void addWord(int typeId) {
+    public void uploadWords(int typeId) {
+        if (isTableEmpty(typeId))
+            addWords(typeId);
+    }
+
+    private void addWords(int typeId) {
 
         String [] words = AssentWords;
         String NAME = null;
@@ -234,8 +247,8 @@ public class Word {
         if (typeId != ParonymId)
             quickSort(words, 0, words.length - 1);
 
-        for (String word: words) {
 
+        for (String word: words) {
             int pos;
             if (typeId == ParonymId)
                 pos = 0;
@@ -245,20 +258,22 @@ public class Word {
             if (pos < 0) return;
 
             ContentValues values;
+            Task task;
 
-            if (typeId == AssentId) {
-                Assent mAssent = new Assent(word.toLowerCase(), pos, false);
-                values = getContentValues(mAssent);
+            switch (typeId) {
+                case SuffixId:
+                    task = new Suffix(word.toLowerCase(), pos, "");
+                    break;
+                case ParonymId:
+                    String[] splitWord = word.split(":");
+                    task = new Paronym(splitWord);
+                    break;
+                default:
+                    task = new Assent(word.toLowerCase(), pos, false);
+                    break;
             }
-            else if (typeId == SuffixId) {
-                Suffix mSuffix = new Suffix(word.toLowerCase(), pos, "");
-                values = getContentValues(mSuffix);
-            }
-            else {
-                Paronym paronym = new Paronym("абонемент", "абонент",
-                        new String[]{"абонемент в театр", "абонемент на цикл лекций", "межбиблиотечный абонемент"});
-                values = getContentValues(paronym);
-            }
+
+            values = getContentValues(task, typeId);
 
             mDatabase.insert(NAME, null, values);
         }
@@ -276,16 +291,46 @@ public class Word {
         return pos;
     }
 
+    //Возвращает позицию первой буквы слова в словосочетании
+    private int findWordInPhrase(String[] phrase, String word) {
+        int pos = 0;
+
+        for (String s : phrase) {
+            if (s.equals(word)) return pos;
+            pos += s.length();
+        }
+        return -1;
+    }
+
     //Возвращает рандомное слово для раздела теория
     public Spannable getRandomWord(int typeId, int color) {
         int index;
 
-        if (isTableEmpty(typeId)) {
-            addWord(typeId);
-        }
+        uploadWords(typeId);
 
         index = mRandom.nextInt(getWordCount(typeId)) + 1;
+
+        if (typeId == ParonymId) {
+            Paronym paronym = (Paronym) getWordFromTable(typeId, index);
+            String phrase = paronym.getRandomVariant();
+            return getPaintedParonym(phrase, paronym.getWord(), color);
+        }
         return getWordFromTable(typeId, index, color);
+    }
+
+    @NonNull
+    private SpannableString getPaintedParonym(String phrase, String word, int color) {
+        int pos = findWordInPhrase(phrase.split(" "), word);
+
+        SpannableString string = new SpannableString(phrase);
+        if (pos >= 0)
+            string.setSpan(
+                new ForegroundColorSpan(color),
+                pos,
+                pos + word.length() + 1,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+        return string;
     }
 
 
@@ -296,9 +341,7 @@ public class Word {
         ArrayList<Spannable> returns;
         int index;
 
-        if (isTableEmpty(typeId)) {
-            addWord(typeId);
-        }
+        uploadWords(typeId);
 
         //обновление базы данных нужно доделать, а то она не обновляется :)
         cursorWrapper = queryTasks(
@@ -359,8 +402,7 @@ public class Word {
             returns.add(getPaintedWord(
                     mAssent.getWord(),
                     indexes.get(i),
-                    color
-            ));
+                    color));
         }
 
         return returns;
@@ -369,13 +411,19 @@ public class Word {
     //возвращает очередное слово для библиотеки знаний
     public Spannable getNextWord(int typeId, int position, int color) {
 
-        if (isTableEmpty(typeId)) {
-            addWord(typeId);
-        }
+        uploadWords(typeId);
+        return getWordFromTable(typeId, position + 1, color);
+    }
 
-        if (typeId == AssentId || typeId == SuffixId)
-            return getWordFromTable(typeId, position + 1, color);
-        return null;
+    public SpannableString[] getParonymVariants(int index, int color) {
+        Paronym paronym = (Paronym) getWordFromTable(ParonymId, index + 1);
+
+        SpannableString[] strings = new SpannableString[paronym.getVariants().length];
+
+        for (int i = 0; i < strings.length; i++)
+            strings[i] = getPaintedParonym(paronym.getVariants()[i], paronym.getWord(), color);
+
+        return strings;
     }
 
     //возвращает количество слов в таблице в зависимости от typeId
@@ -385,6 +433,9 @@ public class Word {
         switch (typeId) {
             case SuffixId:
                 tableName = SuffixTable.NAME;
+                break;
+            case ParonymId:
+                tableName = ParonymTable.NAME;
                 break;
             default:
                 tableName = AssentTable.NAME;
@@ -419,9 +470,19 @@ public class Word {
      * @param color - цвет прописной буквы
      * @return возвращает слово из таблицы
      **/
+
     @Nullable
     private Spannable getWordFromTable(int typeId, @IntRange(from = 1) int index, int color) {
 
+        Task task = getWordFromTable(typeId, index);
+
+        if (typeId == ParonymId) {
+            return new SpannableString(task.getWord());
+        }
+        return getPaintedWord(task.getWord(), task.getPosition(), color);
+    }
+
+    private Task getWordFromTable(int typeId, @IntRange(from = 1) int index) {
         Task task;
         TaskCursorWrapper cursorWrapper;
         String tableName = AssentTable.NAME;
@@ -435,6 +496,10 @@ public class Word {
             case SuffixId:
                 tableName = SuffixTable.NAME;
                 id = SuffixTable.Cols.ID;
+                break;
+            case ParonymId:
+                tableName = ParonymTable.NAME;
+                id = ParonymTable.Cols.ID;
                 break;
         }
 
@@ -452,7 +517,7 @@ public class Word {
         toUpperCase(task);
         cursorWrapper.close();
 
-        return getPaintedWord(task.getWord(), task.getPosition(), color);
+        return task;
     }
 
     //возвращает слово с буквой на позиции position цвета charColor
@@ -494,6 +559,10 @@ public class Word {
                 tableName = SuffixTable.NAME;
                 wordColumn = SuffixTable.Cols.WORD;
                 break;
+            case ParonymId:
+                tableName = ParonymTable.NAME;
+                wordColumn = ParonymTable.Cols.WORD;
+                break;
         }
 
         cursorWrapper = queryTasks(
@@ -517,11 +586,8 @@ public class Word {
                     toUpperCase(task);
                     results.add(getPaintedWord(task.getWord(), task.getPosition(), color));
                 }
-
                 cursorWrapper.moveToNext();
             }
-
-            cursorWrapper.close();
         }
         else {
             cursorWrapper.moveToFirst();
@@ -533,11 +599,9 @@ public class Word {
                 cursorWrapper.moveToNext();
             }
 
-            cursorWrapper.close();
         }
+        cursorWrapper.close();
 
-
-        
         return results;
     }
 
@@ -652,31 +716,28 @@ public class Word {
 
 
 
+    @NonNull
+    private static ContentValues getContentValues(Task task, int typeId) {
 
-
-    private static ContentValues getContentValues(Assent assent) {
         ContentValues values = new ContentValues();
-        values.put(AssentTable.Cols.WORD, assent.getWord());
-        values.put(AssentTable.Cols.POSITION, assent.getPosition());
-        values.put(AssentTable.Cols.CHECKED, assent.isChecked() ? 1 : 0);
 
-        return values;
-    }
-
-    private static ContentValues getContentValues(Suffix suffix) {
-        ContentValues values = new ContentValues();
-        values.put(SuffixTable.Cols.WORD, suffix.getWord());
-        values.put(SuffixTable.Cols.POSITION, suffix.getPosition());
-        values.put(SuffixTable.Cols.ALTERNATIVE, suffix.getAlternative());
-
-        return values;
-    }
-
-    private ContentValues getContentValues(Paronym paronym) {
-        ContentValues values = new ContentValues();
-        values.put(ParonymTable.Cols.WORD, paronym.getWord());
-        values.put(ParonymTable.Cols.VARIANTS, paronym.getVariants());
-        values.put(ParonymTable.Cols.ALTERNATIVE, paronym.getAlternative());
+        switch (typeId) {
+            case SuffixId:
+                values.put(SuffixTable.Cols.WORD, task.getWord());
+                values.put(SuffixTable.Cols.POSITION, task.getPosition());
+                values.put(SuffixTable.Cols.ALTERNATIVE, ((Suffix) task).getAlternative());
+                break;
+            case ParonymId:
+                values.put(ParonymTable.Cols.WORD, ((Paronym) task).getWord());
+                values.put(ParonymTable.Cols.VARIANTS, ((Paronym) task).getStringVariants());
+                values.put(ParonymTable.Cols.ALTERNATIVE, ((Paronym) task).getAlternative());
+                break;
+            default:
+                values.put(AssentTable.Cols.WORD, task.getWord());
+                values.put(AssentTable.Cols.POSITION, task.getPosition());
+                values.put(AssentTable.Cols.CHECKED, ((Assent) task).isChecked() ? 1 : 0);
+                break;
+        }
 
         return values;
     }
@@ -684,7 +745,7 @@ public class Word {
     private void updateAssent(Assent assent) {
 
         String idString = assent.getId() + "";
-        ContentValues values = getContentValues(assent);
+        ContentValues values = getContentValues(assent, AssentId);
 
         mDatabase.update(
                 AssentTable.NAME,

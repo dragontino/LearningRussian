@@ -89,8 +89,8 @@ public class Support {
     public void setThemeToScreen(
             Window window,
             @Nullable ActionBar actionBar,
-            Menu menu,
-            @NonNull @IdRes int[] menuItems)
+            @Nullable Menu menu,
+            @Nullable @IdRes int[] menuItems)
     {
 
         int iconColor;
@@ -139,6 +139,8 @@ public class Support {
 //
 //            actionBar.setHomeAsUpIndicator(upArrow);
 //        }
+
+        if (menu == null || menuItems == null) return;
 
         for (int id : menuItems) {
             MenuItem item = menu.findItem(id);
@@ -210,6 +212,13 @@ public class Support {
 
     public String getTheme() {
         return mSettings.getTheme();
+    }
+
+    public void updateTheme() {
+        if (getTheme().equals(THEME_LIGHT))
+            setTheme(THEME_NIGHT);
+        else
+            setTheme(THEME_LIGHT);
     }
 
     public void setQuestions(int questions) {

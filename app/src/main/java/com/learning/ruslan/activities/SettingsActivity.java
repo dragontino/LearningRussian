@@ -37,7 +37,7 @@ import static com.learning.ruslan.Support.THEME_NIGHT;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SwitchCompat switchCompat;
-    private TextView switchTheme;
+    private SwitchCompat switchTheme;
     private TextView textView, textView2;
     private EditText editText, editText2;
     private Button buttonLanguage;
@@ -87,8 +87,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         theme = support.getTheme();
 
+        switchCompat.setChecked(support.getChecked());
+        switchTheme.setChecked(support.getTheme().equals(THEME_NIGHT));
+
         buttonLanguage.setOnClickListener(this);
-        switchTheme.setOnClickListener(this);
+//        switchTheme.setOnClickListener(this);
 
         switchChecked(support.getChecked());
         editText.setText(String.valueOf(support.getPause()));
@@ -198,6 +201,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             switchChecked(isChecked);
             isSettingsChanged = true;
         });
+
+        if (switchTheme != null) switchTheme.setOnCheckedChangeListener(((buttonView, isChecked) -> {
+            support.updateTheme();
+            updateTheme();
+            switchTheme.setChecked(isChecked);
+        }
+        ));
     }
 
 

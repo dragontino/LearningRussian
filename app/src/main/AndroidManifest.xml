@@ -31,8 +31,8 @@
             android:name=".ParonymTestActivity"
             android:label="@string/paronym_label" />
         <activity
-            android:name=".ParonymActivity"
-            android:label="@string/paronym_label" />
+            android:name=".activities.ParonymActivity"
+            android:label="@string/library_label" />
         <activity
             android:name=".SuffixActivity"
             android:label="@string/suffix_label" />

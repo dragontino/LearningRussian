@@ -17,7 +17,7 @@
     <string name="settings_saved">Settings saved!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Version <b>5.6.1</b>%1$sof <i>october 17, 2021</i></string>
+    <string name="version">Version <b>5.7.0</b>%1$sof <i>october 19, 2021</i></string>
     <string name="vk"><b><i>Contact the developer:</i></b> <a href="https://vk.com/cepetroff"><b>VK</b></a>
         \n<a href="https://t.me/cepetroff"><b>Telegram</b></a></string>
     <string name="mail">petrovsd2002@gmail.com</string>
@@ -41,12 +41,11 @@
     <string name="suffix_label">Suffixes</string>
     <string name="settings_title">Settings</string>
     <string name="paronym_label">Paronyms</string>
-    <string name="library_label">Pronunciation dictionary</string>
     <string name="language_label">Language</string>
     <string name="about_title"><b>About</b></string>
 
     <string name="menu_item_get_back">Get back</string>
-    <string name="menu_item_list_words">Knowledge Library</string>
+    <string name="library_label">Knowledge Library</string>
     <string name="not_completed_section">This section is still incomplete ¯\\_(ツ)_/¯</string>
     <string name="main_label">Main menu</string>
     <string name="search_label">Search</string>

@@ -3,7 +3,10 @@ package com.learning.ruslan.databases;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
+import androidx.annotation.Nullable;
+
 import com.learning.ruslan.Assent;
+import com.learning.ruslan.Paronym;
 import com.learning.ruslan.Suffix;
 import com.learning.ruslan.Task;
 import com.learning.ruslan.Word;
@@ -32,11 +35,11 @@ public class TaskCursorWrapper extends CursorWrapper {
     public Paronym getParonym() {
         return new Paronym(
                 getString(getColumnIndex(RusDbSchema.ParonymTable.Cols.WORD)),
-                getString(getColumnIndex(RusDbSchema.ParonymTable.Cols.ALTERNATIVE)),
-                getString(getColumnIndex(RusDbSchema.ParonymTable.Cols.VARIANTS)).split(" ")
+                getString(getColumnIndex(RusDbSchema.ParonymTable.Cols.VARIANTS)), getString(getColumnIndex(RusDbSchema.ParonymTable.Cols.ALTERNATIVE))
         );
     }
 
+    @Nullable
     public Task getTask(int typeId) {
         switch (typeId) {
             case Word.AssentId:

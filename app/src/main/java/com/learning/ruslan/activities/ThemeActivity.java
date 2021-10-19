@@ -135,10 +135,11 @@ public class ThemeActivity extends AppCompatActivity {
 
         private void onClick(View view) {
             Toast.makeText(getApplicationContext(), "Выбрана тема " + mTextView.getText(), Toast.LENGTH_SHORT).show();
-            if (position == 0)
-                support.setTheme(Support.THEME_LIGHT);
-            else
-                support.setTheme(Support.THEME_NIGHT);
+//            if (position == 0)
+//                support.setTheme(Support.THEME_LIGHT);
+//            else
+//                support.setTheme(Support.THEME_NIGHT);
+            support.updateTheme();
             finish();
         }
     }

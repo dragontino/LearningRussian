@@ -97,6 +97,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
 
         //support.setQuestions(support.getQuestions() % word.getWordCount(Word.AssentId));
         random = new Random();
+
+        word.uploadWords(typeId);
     }
 
     @Nullable

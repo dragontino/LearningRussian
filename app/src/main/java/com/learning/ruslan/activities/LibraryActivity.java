@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -14,10 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +88,10 @@ public class LibraryActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.length() == 0) {
+                    search_results = word.findWordInTable(typeId, "", letterColor);
+                    updateUI();
+                }
                 return false;
             }
         });
@@ -115,8 +118,8 @@ public class LibraryActivity extends AppCompatActivity {
 
     private void updateUI() {
 
-        int index = Word.SUBJECTS.indexOf(typeId);
-        setTitle(Word.TITLES[index]);
+//        int index = Word.SUBJECTS.indexOf(typeId);
+//        setTitle(Word.TITLES[index]);
 
         switch (support.getTheme()) {
             case Support.THEME_LIGHT:
@@ -196,6 +199,9 @@ public class LibraryActivity extends AppCompatActivity {
                 word = search_results.get(position);
 
             holder.bindWord(word);
+
+            holder.setOnClickListener(v ->
+                    startActivity(ParonymActivity.newIntent(getApplicationContext(), position)));
         }
 
         @Override
@@ -223,6 +229,11 @@ public class LibraryActivity extends AppCompatActivity {
             mTextView.setText(word);
             mTextView.setTextColor(fontColor);
             mTextView.setBackground(ContextCompat.getDrawable(getApplicationContext(), ResId));
+        }
+
+        public void setOnClickListener(View.OnClickListener listener) {
+            if (typeId == Word.ParonymId)
+                mTextView.setOnClickListener(listener);
         }
     }
 }
