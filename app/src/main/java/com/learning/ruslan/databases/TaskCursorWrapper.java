@@ -11,6 +11,8 @@ import com.learning.ruslan.Suffix;
 import com.learning.ruslan.Task;
 import com.learning.ruslan.Word;
 
+import org.jetbrains.annotations.NotNull;
+
 public class TaskCursorWrapper extends CursorWrapper {
 
     public TaskCursorWrapper(Cursor cursor) {
@@ -39,16 +41,15 @@ public class TaskCursorWrapper extends CursorWrapper {
         );
     }
 
-    @Nullable
+    @NotNull
     public Task getTask(int typeId) {
         switch (typeId) {
-            case Word.AssentId:
-                return getAssent();
             case Word.SuffixId:
                 return getSuffix();
             case Word.ParonymId:
                 return getParonym();
+            default:
+                return getAssent();
         }
-        return null;
     }
 }

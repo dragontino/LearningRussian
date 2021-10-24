@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.learning.ruslan.Paronym;
 import com.learning.ruslan.R;
 import com.learning.ruslan.Support;
 import com.learning.ruslan.Word;
@@ -30,7 +28,7 @@ public class ParonymActivity extends AppCompatActivity {
     private int fontColor = Color.BLACK;
     private int letColor = Color.MAGENTA;
     private Word word;
-    private int position;
+    private int position_paronym;
     private int ResId;
 
     public static Intent newIntent(Context context, int position) {
@@ -49,10 +47,9 @@ public class ParonymActivity extends AppCompatActivity {
 
         Support support = Support.get(this);
         word = Word.get(this);
-        position = getIntent().getIntExtra(KEY, 0);
+        position_paronym = getIntent().getIntExtra(KEY, 0);
 
-        SpannableString[] phrases = word.getParonymVariants(position, letColor);
-        mRecyclerView.setAdapter(new ParonymAdapter(phrases));
+        mRecyclerView.setAdapter(new ParonymAdapter());
 
         switch (support.getTheme()) {
             case Support.THEME_LIGHT:
@@ -82,12 +79,6 @@ public class ParonymActivity extends AppCompatActivity {
 
     private class ParonymAdapter extends RecyclerView.Adapter<ParonymHolder> {
 
-        private final SpannableString[] phrases;
-
-        public ParonymAdapter(SpannableString[] phrases) {
-            this.phrases = phrases;
-        }
-
         @NonNull
         @Override
         public ParonymHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -99,12 +90,13 @@ public class ParonymActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ParonymHolder holder, int position) {
-            holder.bindParonym(phrases[position]);
+            SpannableString phrase = word.getParonymVariant(position_paronym, position, letColor);
+            holder.bindParonym(phrase);
         }
 
         @Override
         public int getItemCount() {
-            return phrases.length;
+            return word.getParonymPhraseCount(position_paronym);
         }
     }
 

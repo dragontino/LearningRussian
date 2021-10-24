@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -196,10 +197,7 @@ public class LibraryActivity extends AppCompatActivity {
             else
                 word = search_results.get(position);
 
-            holder.bindWord(word);
-
-            holder.setOnClickListener(v ->
-                    startActivity(ParonymActivity.newIntent(getApplicationContext(), position)));
+            holder.bindWord(word, position);
         }
 
         @Override
@@ -214,24 +212,29 @@ public class LibraryActivity extends AppCompatActivity {
 
 
 
-    private class LibraryHolder extends RecyclerView.ViewHolder {
+    private class LibraryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView mTextView;
+        private int position;
 
         public LibraryHolder(@NonNull View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.list_item_library_textView);
+
+            if (typeId == Word.ParonymId) mTextView.setOnClickListener(this);
         }
 
-        public void bindWord(Spannable word) {
+        public void bindWord(Spannable word, int position) {
             mTextView.setText(word);
             mTextView.setTextColor(fontColor);
             mTextView.setBackground(ContextCompat.getDrawable(getApplicationContext(), ResId));
+            this.position = position;
         }
 
-        public void setOnClickListener(View.OnClickListener listener) {
-            if (typeId == Word.ParonymId)
-                mTextView.setOnClickListener(listener);
+        @Override
+        public void onClick(View v) {
+            Intent intent = ParonymActivity.newIntent(getApplicationContext(), position);
+            startActivity(intent);
         }
     }
 }

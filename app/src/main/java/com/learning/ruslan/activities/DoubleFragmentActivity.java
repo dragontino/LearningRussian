@@ -47,6 +47,8 @@ public class DoubleFragmentActivity extends AppCompatActivity {
         typeId = getIntent().getIntExtra(ActivityId, Word.AssentId);
         ViewPager viewPager = findViewById(R.id.view_pager);
 
+        setTitle(Word.getTitle(typeId));
+
 //        ArrayAdapter<String> adapter = new ArrayAdapter<>(
 //                this,
 //                R.layout.spinner_item,

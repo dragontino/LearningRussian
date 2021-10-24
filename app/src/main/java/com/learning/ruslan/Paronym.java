@@ -2,18 +2,21 @@ package com.learning.ruslan;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Paronym extends Task {
 
     private static final String split = "\\|";
 
-    private String[] alternative;
+    private String[] alternatives;
     private String[] variants;
 
     public Paronym(String word, String variants, String alternative_words) {
         super(word, -1);
-        setAlternative(alternative_words);
+        setAlternatives(alternative_words);
         setVariants(variants);
     }
 
@@ -34,16 +37,35 @@ public class Paronym extends Task {
     }
 
     public String getRandomVariant() {
-        int index = (new Random()).nextInt(variants.length);
-        return variants[index];
+        return getVariant(new Random().nextInt(variants.length));
     }
 
-    public void setAlternative(String alternative) {
-        this.alternative = alternative.split(split);
+    public String getVariant(int position) {
+        return variants[position];
     }
 
-    public String getAlternative() {
-        return toString(alternative);
+    public void setAlternatives(String alternatives) {
+        this.alternatives = alternatives.split(split);
+    }
+
+    public String[] getAlternatives() {
+        return alternatives;
+    }
+
+    public String getStringAlternatives() {
+        return toString(alternatives);
+    }
+
+    public List<String> getRandomAlternatives(int count) {
+        List<String> list = Arrays.asList(alternatives);
+        Collections.shuffle(list);
+
+        if (list.size() <= count) return list;
+        return list.subList(0, count);
+    }
+
+    public String getAlternative(int position) {
+        return alternatives[position];
     }
 
 

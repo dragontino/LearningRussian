@@ -17,7 +17,7 @@
     <string name="settings_saved">Settings saved!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Version <b>5.7.0</b>%1$sof <i>october 19, 2021</i></string>
+    <string name="version">Version <b>5.8.2</b>%1$sof <i>october 24, 2021</i></string>
     <string name="vk"><b><i>Contact the developer:</i></b> <a href="https://vk.com/cepetroff"><b>VK</b></a>
         \n<a href="https://t.me/cepetroff"><b>Telegram</b></a></string>
     <string name="mail">petrovsd2002@gmail.com</string>
@@ -27,6 +27,7 @@
     <string name="btn_continue">Continue</string>
 
     <string name="assent_test_text">Choose a word that has the correct accent:</string>
+    <string name="suffix_test_text">Choose a correctly spelled word:</string>
     <string name="paronym_test_text">Insert the missing word:</string>
     <string name="time_is_over">Time is over!</string>
     <string name="score">Question №%1$d/%2$d\nYour current score: %3$d/%4%d</string>
@@ -49,4 +50,5 @@
     <string name="not_completed_section">This section is still incomplete ¯\\_(ツ)_/¯</string>
     <string name="main_label">Main menu</string>
     <string name="search_label">Search</string>
+
 </resources>

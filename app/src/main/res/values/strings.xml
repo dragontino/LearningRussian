@@ -16,7 +16,7 @@
     <string name="settings_saved">Настройки успешно сохранены!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Версия <b>5.7.0</b>%1$sот <i>19 октября 2021</i></string>
+    <string name="version">Версия <b>5.8.2</b>%1$sот <i>24 октября 2021</i></string>
     <string name="vk"><b><i>Связь с разработчиком:</i></b> <a href="https://vk.com/cepetroff"><b>Вконтакте</b></a>
         \n<a href="https://t.me/cepetroff"><b>Телеграм</b></a></string>
     <string name="mail">petrovsd2002@yandex.ru</string>
@@ -26,6 +26,7 @@
     <string name="btn_continue">Продолжить</string>
 
     <string name="assent_test_text">Выберите слово, в котором верно поставлено ударение:</string>
+    <string name="suffix_test_text">Выберите верно написанное слово:</string>
     <string name="paronym_test_text">Вставьте пропущенное слово:</string>
     <string name="score">Вопрос №%1$d/%2$d\nВаш текущий результат: %3$d/%4$d"</string>
     <string name="time_is_over">Время закончилось!</string>

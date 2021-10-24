@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.list_item_main_textView);
-
             itemView.setOnClickListener(this);
         }
 
@@ -181,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = DoubleFragmentActivity
                     .newIntent(getApplicationContext(), typeId);
-
             startActivity(intent);
         }
     }

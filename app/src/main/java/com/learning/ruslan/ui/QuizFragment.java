@@ -17,8 +17,10 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
@@ -253,8 +255,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
             return;
         }
 
-        updateButtons();
         updateTextView(true);
+        updateButtons();
 
         if (onPause)
             onPause = false;
@@ -306,6 +308,16 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
         }
         else {
             ArrayList<Spannable> words = word.getRandomWords(typeId, letColor);
+            if (words == null) {
+                Toast.makeText(getContext(), "слов нет...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (typeId == Word.ParonymId) {
+                textView.append("\n");
+                textView.append(words.get(0));
+                words.remove(0);
+            }
 
             Spannable rightWord = words.get(0);
             words.remove(0);
@@ -313,6 +325,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
             words.add(this.corr_index, rightWord);
 
             count_variants = words.size();
+            if (count_variants > 4) count_variants = 4;
 
             int elem;
             for (elem = 0; elem < count_variants; elem++) {
@@ -418,7 +431,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
             this.tvParams.horizontalBias = (float) 0.5;
             this.tvParams.verticalBias = (float) 0.5;
 
-            this.textView.setText(R.string.assent_test_text);
+            this.textView.setText(getRightText());
 
             if (!onPause) {
                 @SuppressLint("StringFormatMatches")
@@ -469,5 +482,17 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
         }
 
         chronometer.setText(String.valueOf(time--));
+    }
+
+    @StringRes
+    private int getRightText() {
+        switch (typeId) {
+            case Word.ParonymId:
+                return R.string.paronym_test_text;
+            case Word.SuffixId:
+                return R.string.suffix_test_text;
+            default:
+                return R.string.assent_test_text;
+        }
     }
 }
