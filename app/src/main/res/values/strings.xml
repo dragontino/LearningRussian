@@ -16,7 +16,7 @@
     <string name="settings_saved">Настройки успешно сохранены!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Версия <b>5.8.2</b>%1$sот <i>24 октября 2021</i></string>
+    <string name="version">Версия <b>5.8.4</b>%1$sот <i>26 октября 2021</i></string>
     <string name="vk"><b><i>Связь с разработчиком:</i></b> <a href="https://vk.com/cepetroff"><b>Вконтакте</b></a>
         \n<a href="https://t.me/cepetroff"><b>Телеграм</b></a></string>
     <string name="mail">petrovsd2002@yandex.ru</string>

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu menu;
 
     private int fontColor;
-    private int ResId;
+    private int backgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
         switch (support.getTheme()) {
             case Support.THEME_LIGHT:
-                ResId = R.drawable.edittext_style;
+                backgroundColor = Color.WHITE;
                 fontColor = Color.BLACK;
                 break;
             case Support.THEME_NIGHT:
-                ResId = R.drawable.edittext_style_2;
+                backgroundColor = Color.BLACK;
                 fontColor = Color.WHITE;
                 break;
         }
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         public void bindTask(String title, int typeId) {
             mTextView.setText(title);
             mTextView.setTextColor(fontColor);
-            mTextView.setBackground(ContextCompat.getDrawable(getApplicationContext(), ResId));
+            mTextView.setBackgroundColor(backgroundColor);
             this.typeId = typeId;
         }
 

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,17 +22,19 @@ import com.learning.ruslan.Word;
 
 public class ParonymActivity extends AppCompatActivity {
 
-    private static final String KEY = "KEY";
+    private static final String KEY_POS = "KEY_POS";
+    private static final String KEY_WORD = "KEY_WORD";
 
     private int fontColor = Color.BLACK;
     private int letColor = Color.MAGENTA;
     private Word word;
     private int position_paronym;
-    private int ResId;
+    private int backgroundColor;
 
-    public static Intent newIntent(Context context, int position) {
+    public static Intent newIntent(Context context, String word, int position) {
         Intent intent = new Intent(context, ParonymActivity.class);
-        intent.putExtra(KEY, position);
+        intent.putExtra(KEY_WORD, word);
+        intent.putExtra(KEY_POS, position);
         return intent;
     }
 
@@ -47,18 +48,20 @@ public class ParonymActivity extends AppCompatActivity {
 
         Support support = Support.get(this);
         word = Word.get(this);
-        position_paronym = getIntent().getIntExtra(KEY, 0);
+        position_paronym = getIntent().getIntExtra(KEY_POS, 0);
+        String title = getIntent().getStringExtra(KEY_WORD);
+        setTitle(title);
 
         mRecyclerView.setAdapter(new ParonymAdapter());
 
         switch (support.getTheme()) {
             case Support.THEME_LIGHT:
+                backgroundColor = Color.WHITE;
                 fontColor = Color.BLACK;
                 letColor = Color.MAGENTA;
-                ResId = R.drawable.edittext_style;
                 break;
             case Support.THEME_NIGHT:
-                ResId = R.drawable.edittext_style_2;
+                backgroundColor = Color.BLACK;
                 fontColor = Color.WHITE;
                 letColor = Support.color_magenta2;
                 break;
@@ -110,12 +113,13 @@ public class ParonymActivity extends AppCompatActivity {
         public ParonymHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.list_item_library_textView);
+            textView.setTextIsSelectable(true);
         }
 
         public void bindParonym(SpannableString phrase) {
             textView.setText(phrase);
             textView.setTextColor(fontColor);
-            textView.setBackgroundResource(ResId);
+            textView.setBackgroundColor(backgroundColor);
         }
     }
 }

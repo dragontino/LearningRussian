@@ -20,7 +20,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +44,7 @@ public class LibraryActivity extends AppCompatActivity {
 
     private int typeId;
     private int fontColor, letterColor;
-    private int ResId;
+    private int backgroundColor;
 
 
     public static Intent newIntent(Context context, int typeId) {
@@ -122,12 +121,12 @@ public class LibraryActivity extends AppCompatActivity {
 
         switch (support.getTheme()) {
             case Support.THEME_LIGHT:
-                ResId = R.drawable.edittext_style;
+                backgroundColor = Color.WHITE;
                 fontColor = Color.BLACK;
                 letterColor = Color.MAGENTA;
                 break;
             case Support.THEME_NIGHT:
-                ResId = R.drawable.edittext_style_2;
+                backgroundColor = Color.BLACK;
                 letterColor = Support.color_magenta2;
                 fontColor = Color.WHITE;
                 break;
@@ -221,19 +220,24 @@ public class LibraryActivity extends AppCompatActivity {
             super(itemView);
             mTextView = itemView.findViewById(R.id.list_item_library_textView);
 
-            if (typeId == Word.ParonymId) mTextView.setOnClickListener(this);
+            if (typeId == Word.ParonymId) {
+                mTextView.setOnClickListener(this);
+                mTextView.setTextIsSelectable(false);
+            }
+            else mTextView.setTextIsSelectable(true);
         }
 
         public void bindWord(Spannable word, int position) {
             mTextView.setText(word);
             mTextView.setTextColor(fontColor);
-            mTextView.setBackground(ContextCompat.getDrawable(getApplicationContext(), ResId));
+            mTextView.setBackgroundColor(backgroundColor);
             this.position = position;
         }
 
         @Override
         public void onClick(View v) {
-            Intent intent = ParonymActivity.newIntent(getApplicationContext(), position);
+            Intent intent = ParonymActivity
+                    .newIntent(getApplicationContext(), mTextView.getText().toString(), position);
             startActivity(intent);
         }
     }

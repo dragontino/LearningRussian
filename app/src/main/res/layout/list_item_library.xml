@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_item_library_textView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="30sp"
-    android:gravity="center"
-    android:clickable="true"
-    android:textIsSelectable="true"
-    android:background="@drawable/edittext_style"
-    android:focusable="true"/>
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/list_item_library_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+</LinearLayout>

@@ -1,5 +1,5 @@
 ext {
-    defaultVersionName = '5.8.2'
+    defaultVersionName = '5.8.4'
     defaultVersionCode = 5
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
