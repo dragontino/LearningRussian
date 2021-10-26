@@ -48,6 +48,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
     private Chronometer chronometer;
     private Random random;
     private Date date;
+    private String phrase;
 
     private int time = MAX_TIME, corr_index, score, numb_of_question = 0;
     private int questions;
@@ -277,9 +278,15 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
         public void run() {
             String text = textView.getText().toString();
             mHandler.postDelayed(this, 250);
-            if (text.equals("")) textView.setText(buttons[corr_index].getText());
-            else textView.setText("");
 
+            CharSequence newText = "";
+            if (text.equals("")) {
+                newText = buttons[corr_index].getText();
+                if (typeId == Word.ParonymId)
+                    newText = Word.concat(textView.getText().toString(), newText, letColor);
+            }
+
+            textView.setText(newText);
 
             textView.setTextSize(50);
             textView.setTypeface(Typeface.createFromAsset(
@@ -294,8 +301,6 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
     };
 
 
-
-    @SuppressLint("SetTextI18n")
 
     private void updateButtons() {
 
@@ -315,12 +320,17 @@ public class QuizFragment extends Fragment implements View.OnClickListener, Chro
             if (typeId == Word.ParonymId) {
                 textView.append("\n");
                 textView.append(words.get(0));
+                phrase = words.get(0).toString();
                 words.remove(0);
             }
 
             Spannable rightWord = words.get(0);
             words.remove(0);
-            this.corr_index = random.nextInt(words.size());
+            if (words.size() == 2)
+                this.corr_index = 1;
+            else
+                this.corr_index = random.nextInt(words.size());
+
             words.add(this.corr_index, rightWord);
 
             count_variants = words.size();

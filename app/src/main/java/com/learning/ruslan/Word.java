@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.IntRange;
@@ -261,6 +262,27 @@ public class Word {
             default:
                 return TITLES[0];
         }
+    }
+
+    //вставляет в фразу слово на место многоточия
+    public static CharSequence concat(String phrase, CharSequence word, int color) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        String[] arr = phrase.split(" ");
+
+        for (String s : arr) {
+            if (s.equals("...")) {
+                SpannableString string = new SpannableString(word);
+                string.setSpan(new ForegroundColorSpan(color), 0, word.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.append(string);
+            }
+            else builder.append(s);
+
+            builder.append(" ");
+        }
+
+        Log.d(TAG, builder.toString());
+
+        return builder;
     }
 
     private Word(Context context) {
