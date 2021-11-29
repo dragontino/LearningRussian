@@ -75,22 +75,19 @@ public class LibraryActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.menu_item_search);
         searchView = (SearchView) searchItem.getActionView();
+        updateUI();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                search_results = word.findWordInTable(typeId, query, letterColor);
-                updateUI();
-                return true;
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.length() == 0) {
-                    search_results = word.findWordInTable(typeId, "", letterColor);
-                    updateUI();
-                }
-                return false;
+                search_results = word.findWordInTable(typeId, newText, letterColor);
+                updateUI();
+                return true;
             }
         });
 
@@ -144,11 +141,14 @@ public class LibraryActivity extends AppCompatActivity {
 
         if (searchView != null) {
             EditText searchText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+            ImageView searchImage = searchView.findViewById(androidx.appcompat.R.id.search_button);
             ImageView clearView = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
 
             searchText.setTextColor(fontColor);
+            searchText.setHintTextColor(getColor(android.R.color.darker_gray));
             searchText.setBackgroundTintList(ColorStateList.valueOf(fontColor));
-            clearView.setBackgroundTintList(ColorStateList.valueOf(fontColor));
+            searchImage.setImageTintList(ColorStateList.valueOf(fontColor));
+            clearView.setImageTintList(ColorStateList.valueOf(fontColor));
         }
     }
 
