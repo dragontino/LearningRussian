@@ -52,8 +52,8 @@
 
     <ImageButton
         android:id="@+id/stop"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:contentDescription="@android:string/cancel"
         android:src="@drawable/clear"
