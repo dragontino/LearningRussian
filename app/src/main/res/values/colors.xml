@@ -7,11 +7,17 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="black2">#000617</color>
+    <color name="background_dark">#212123</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tabs">#8da9e0</color>
-    <color name="magenta">#FF00FF</color>
-    <color name="magenta2">#FF00AA</color>
-    <color name="scoreColor_light">#228C59</color>
-    <color name="scoreColor_night">#4BF2A1</color>
+    <color name="raspberry">#FA056B</color>
+    <color name="pink">#FF00AA</color>
+    <color name="red_light">#F30A0A</color>
+    <color name="red_dark">#F77C7C</color>
+    <color name="score_light">#228C59</color>
+    <color name="score_dark">#4BF2A1</color>
+    <color name="light_gray">#EDEEF3</color>
+    <color name="gray">#39393C</color>
+    <color name="seek_bar_background">@android:color/darker_gray</color>
+    <color name="seek_bar_progress">@color/raspberry</color>
 </resources>

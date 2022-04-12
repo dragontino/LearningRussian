@@ -6,15 +6,15 @@
 
     <item
         android:id="@+id/menu_item_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
+        android:icon="@drawable/settings_icon"
         android:title="@string/settings_title"
         android:orderInCategory="10"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_item_list_words"
+        android:id="@+id/menu_item_library"
         android:title="@string/library_label"
-        android:icon="@drawable/ic_menu_lib"
+        android:icon="@drawable/library_icon"
         app:showAsAction="ifRoom|withText"/>
 
 </menu>

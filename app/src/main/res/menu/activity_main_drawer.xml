@@ -20,6 +20,12 @@
             android:id="@+id/paronym"
             android:title="@string/paronym_label"
             android:icon="@drawable/ic_menu_item_home"/>
+
+        <item
+            android:id="@+id/steady_expression"
+            android:title="@string/steady_expression_label"
+            android:icon="@drawable/ic_menu_item_home"/>
     </group>
+    <!--TODO поменять иконки-->
 
 </menu>

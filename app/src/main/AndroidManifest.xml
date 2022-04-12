@@ -9,15 +9,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.ИзучаемРоднойЯзык">
-        <activity
-            android:name=".activities.ThemeActivity"
-            android:label="@string/theme_label"
-            android:theme="@style/AlertDialogCustom"/>
-        <activity
-            android:name=".activities.LanguageActivity"
-            android:label="@string/language_label"
-            android:theme="@style/AlertDialogCustom" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".ui.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,28 +18,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LibraryActivity"
+            android:name=".ui.LibraryActivity"
             android:label="@string/library_label" />
         <activity
-            android:name=".ParonymTestActivity"
-            android:label="@string/paronym_label" />
+            android:name=".ui.ParonymActivity"/>
         <activity
-            android:name=".activities.ParonymActivity"
-            android:label="@string/library_label" />
-        <activity
-            android:name=".SuffixActivity"
-            android:label="@string/suffix_label" />
-        <activity
-            android:name=".activities.AboutActivity"
-            android:label="@string/about_title"
-            android:theme="@style/AlertDialogCustom" />
-        <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/settings_title" />
         <activity
-            android:name=".activities.DoubleFragmentActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="@string/assent_label" />
+            android:name=".ui.DoubleFragmentActivity"
+            android:configChanges="keyboardHidden|orientation"/>
+        <activity
+            android:name=".ui.TimePickerActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"/>
     </application>
 
 </manifest>

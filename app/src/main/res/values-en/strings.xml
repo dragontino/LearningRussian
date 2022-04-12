@@ -7,20 +7,17 @@
     <!--Экран настроек-->
     <string name="switch_checked"><i>Auto</i>-update of words in the theory section</string>
     <string name="switch_unchecked"><i>Manual</i> updating of words in the theory section</string>
-    <string name="textView1">Word refresh rate (in milliseconds)</string>
+    <string name="update_freq">Word refresh rate (in milliseconds)</string>
     <string name="please_set_value">Please enter a value</string>
-    <string name="lim_of_time">The value must be between %1$s ms and %1$s ms.</string>
-    <string name="textView2">The number of questions in the test section</string>
-    <string name="lim_of_questions">The number of questions must be from %1$s to %1$s</string>
-    <string name="theme_label">App theme</string>
+    <string name="lim_of_time">The value must be between %1$d ms and %2$d ms.</string>
+    <string name="questions_count">The number of questions in the test section</string>
+    <string name="lim_of_questions">The number of questions must be from %1$d to %2$d</string>
+    <string name="theme_label">Night theme: %s</string>
     <string name="button_language_text">🌎 Language</string>
     <string name="settings_saved">Settings saved!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Version <b>5.8.4</b>%1$sof <i>october 26, 2021</i></string>
-    <string name="vk"><b><i>Contact the developer:</i></b> <a href="https://vk.com/cepetroff"><b>VK</b></a>
-        \n<a href="https://t.me/cepetroff"><b>Telegram</b></a></string>
-    <string name="mail">petrovsd2002@gmail.com</string>
+    <string name="version">Version 5.8.4 of april 12, 2022</string>
 
     <!--Кнопки и надписи на экране упражнения-->
     <string name="btn_start">Start</string>
@@ -30,18 +27,19 @@
     <string name="suffix_test_text">Choose a correctly spelled word:</string>
     <string name="paronym_test_text">Insert the missing word:</string>
     <string name="time_is_over">Time is over!</string>
-    <string name="score">Question №%1$d/%2$d\nYour current score: %3$d/%4%d</string>
+    <string name="score">Question №%1$d/%2$d\nYour current score: %3$d/%4$d</string>
     <string name="end_game">Congratulations, you scored %1$d out of %3$d %2$s</string>
     <string name="great_results">"\nThis is the best result for today! You are smart!"</string>
     <string name="one_point">point</string>
     <string name="ten_points">points</string>
     <string name="two_points">points</string>
 
-    <!--Лейблы-->
+    <!--Labels-->
     <string name="assent_label">Pronunciation</string>
     <string name="suffix_label">Suffixes</string>
     <string name="settings_title">Settings</string>
     <string name="paronym_label">Paronyms</string>
+    <string name="steady_expression_label">Steady Expressions</string>
     <string name="language_label">Language</string>
     <string name="about_title"><b>About</b></string>
 
@@ -50,5 +48,21 @@
     <string name="not_completed_section">This section is still incomplete ¯\\_(ツ)_/¯</string>
     <string name="main_label">Main menu</string>
     <string name="search_label">Search</string>
+    <string name="dark_theme">On</string>
+    <string name="light_theme">Off</string>
+    <string name="system_theme">As on device</string>
+    <string name="auto_theme">Auto</string>
+    <string name="switchThemeText">Night mode: %s</string>
+    <string name="feedback">feedback</string>
+    <string name="vk">VK</string>
+    <string name="telegram">Telegram</string>
+    <string name="mail">e-mail</string>
+    <string name="pause">pause</string>
+    <string name="start_time">Sunrise time</string>
+    <string name="end_time">Sunset time</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">OK</string>
+    <string name="changing_theme_time">sunrise and sunset time</string>
+
 
 </resources>

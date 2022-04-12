@@ -14,9 +14,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SwitchLight" parent="Theme.AppCompat.DayNight">
+    <style name="SwitchTheme" parent="Theme.AppCompat.DayNight">
         <!-- активное состояние (30% прозрачности для фона) -->
-        <item name="colorControlActivated">@color/magenta2</item>
+        <item name="colorControlActivated">@color/pink</item>
 
         <!-- неактивное состояние ползунка -->
         <item name="colorSwitchThumbNormal">@color/white</item>

@@ -1,122 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/llMain"
-    tools:context=".activities.SettingsActivity">
+    tools:context=".ui.SettingsActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/llUp"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/auto_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:fontFamily="@font/georgia"
+            android:checked="true"
+            android:layout_margin="@dimen/layout_margin"
+            android:gravity="center"
+            android:text="@string/switch_checked"
+            android:textSize="@dimen/text_size"
+            android:theme="@style/SwitchTheme" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchCompat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:layout_margin="@dimen/layout_margin"
-                android:gravity="center"
-                android:text="@string/switch_checked"
-                android:textSize="@dimen/text_size"
-                android:theme="@style/SwitchLight" />
+        <include
+            layout="@layout/divider_view"/>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:layout_margin="@dimen/layout_margin"
-                android:gravity="center"
-                android:text="@string/textView1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size" />
+        <TextView
+            android:id="@+id/pause_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:layout_marginBottom="4dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:text="@string/update_freq"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size" />
 
-            <EditText
-                android:id="@+id/editTextNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:autofillHints=""
-                android:ems="5"
-                android:gravity="center"
-                android:inputType="number"
-                android:textSize="@dimen/text_size"
-                tools:ignore="LabelFor" />
+        <EditText
+            android:id="@+id/edit_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints="postalCode"
+            android:ems="5"
+            android:hint="@string/update_freq"
+            android:gravity="center"
+            android:inputType="number"
+            android:textSize="@dimen/text_size"/>
 
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:max="10000"
-                android:min="100"
-                tools:targetApi="o" />
+        <SeekBar
+            android:id="@+id/seek_pause"
+            style="@style/Widget.AppCompat.SeekBar.Style"/>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:layout_marginLeft="@dimen/layout_margin"
-                android:layout_marginRight="@dimen/layout_margin"
-                android:layout_marginTop="@dimen/layout_margin"
-                android:gravity="center"
-                android:text="@string/textView2"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size" />
+        <include
+            android:id="@+id/pause_questions_divider"
+            layout="@layout/divider_view"/>
 
-            <EditText
-                android:id="@+id/editTextNumber2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:autofillHints=""
-                android:ems="5"
-                android:gravity="center"
-                android:inputType="number"
-                android:textSize="@dimen/text_size"
-                tools:ignore="LabelFor" />
+        <TextView
+            android:id="@+id/questions_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:layout_marginLeft="@dimen/layout_margin"
+            android:layout_marginRight="@dimen/layout_margin"
+            android:layout_marginTop="@dimen/layout_margin"
+            android:gravity="center"
+            android:text="@string/questions_count"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size" />
 
-            <SeekBar
-                android:id="@+id/seekBar2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:max="10000"
-                android:min="10"
-                tools:targetApi="o" />
+        <EditText
+            android:id="@+id/edit_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints=""
+            android:hint="@string/questions_count"
+            android:ems="5"
+            android:gravity="center"
+            android:inputType="number"
+            android:textSize="@dimen/text_size" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:gravity="center"
-                android:text="@string/theme_label"
-                android:textSize="@dimen/text_size"
-                android:theme="@style/SwitchLight"/>
+        <SeekBar
+            android:id="@+id/seek_questions"
+            style="@style/Widget.AppCompat.SeekBar.Style"/>
 
-            <Button
-                android:id="@+id/buttonLanguage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/layout_margin"
-                android:textAllCaps="false"
-                android:textSize="23sp"/>
+        <include
+            layout="@layout/divider_view"/>
 
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/switch_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_margin"
+            android:minHeight="48dp"
+            android:gravity="center"
+            android:text="@string/theme_label"
+            android:textSize="@dimen/text_size"/>
+
+        <Button
+            android:id="@+id/button_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_margin"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textSize="23sp"/>
+    </LinearLayout>
+</ScrollView>
