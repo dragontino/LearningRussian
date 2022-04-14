@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import com.learning.ruslan.*
 import com.learning.ruslan.databinding.FragmentQuizBinding
 import com.learning.ruslan.settings.SettingsViewModel
-import com.learning.ruslan.settings.SettingsViewModel.Companion.reverseColor
+import com.learning.ruslan.settings.SettingsViewModel.Companion.reverse
 import com.learning.ruslan.task.TaskType
 import com.learning.ruslan.task.TaskViewModel
 import com.learning.ruslan.ui.LearningFragment.Companion.getType
@@ -49,7 +49,6 @@ class QuizFragment : Fragment(), View.OnClickListener,
 
     private lateinit var textViewParams: ConstraintLayout.LayoutParams
     private val random = Random.Default
-    private lateinit var date: Date
 
     /**
      * текущее время в хронометре (показывает, сколько осталось времени на ответ)
@@ -58,7 +57,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
     private var rightIndex = 0
     private var score = 0
     private var currentQuestion = 0
-    private var wrongTime: Long = 0
+    private var wrongTime = 0L
     private var countVariants = 0
 
     private var handlerIsRunning = false
@@ -101,7 +100,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
         // TODO: 11.04.2022 проверить работоспособность. Не работает :(
 //        settings.observeSettings(this)
 
-        typeId = arguments?.getType(ActivityId) ?: TaskType.Assent
+        typeId = arguments.getType(ActivityId, TaskType.Assent)
 
         textViewParams = binding.textView.layoutParams as ConstraintLayout.LayoutParams
 
@@ -121,7 +120,6 @@ class QuizFragment : Fragment(), View.OnClickListener,
             play.backgroundTint = settings.highlightColor
             textView.setTextColor(settings.fontColor)
             chronometer.setTextColor(settings.fontColor)
-
             score.setTextColor(settings.scoreColor)
 
             stop.imageTint = settings.redColor
@@ -130,9 +128,22 @@ class QuizFragment : Fragment(), View.OnClickListener,
             stop.backgroundTint = settings.backgroundColor
             pause.backgroundTint = settings.backgroundColor
 
-            for (btn in answerButtons) {
-                btn.setBackgroundResource(settings.buttonBackgroundRes)
-                btn.setTextColor(settings.fontColor.reverseColor())
+
+            for (btn in answerButtons) settings.run {
+                btn.textColor =
+                if (baseSettings.showingButtonBackground) {
+                    btn.setBackgroundResource(
+                        if (isLightTheme()) R.drawable.button_background_night
+                        else R.drawable.button_background_light
+                    )
+                    fontColor.reverse()
+                } else {
+                    btn.setBackgroundResource(
+                        if (isLightTheme()) R.drawable.button_default_background_light
+                        else R.drawable.button_default_background_dark
+                    )
+                    fontColor
+                }
             }
         }
     }
@@ -142,9 +153,9 @@ class QuizFragment : Fragment(), View.OnClickListener,
         updateUI()
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
         endGame()
-        super.onStop()
+        super.onDestroy()
     }
 
 
@@ -152,14 +163,12 @@ class QuizFragment : Fragment(), View.OnClickListener,
         when (v.id) {
             R.id.play -> startGame()
 
-            in answerButtons.editElements { it.id } ->
-                if (v === answerButtons[rightIndex]) {
+            in answerButtons.editElements { it.id } -> {
+                if (v == answerButtons[rightIndex]) {
                     score++
                     startGame()
-                }
-                else {
-                    date = Date()
-                    wrongTime = date.time
+                } else {
+                    wrongTime = System.currentTimeMillis()
                     handlerIsRunning = true
                     activity?.let {
                         handler = Handler(it.mainLooper)
@@ -171,6 +180,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
 
                     setChronometerOnPause(true, View.INVISIBLE)
                 }
+            }
             R.id.stop -> {
                 if (handlerIsRunning)
                     stopHandler()
@@ -242,8 +252,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
                 setTypeface("fonts/xarrovv.otf", Typeface.BOLD)
             }
 
-            date = Date()
-            if (date.time - wrongTime >= 3000) {
+            if (System.currentTimeMillis() - wrongTime >= 3000) {
                 stopHandler()
             }
         }
@@ -261,7 +270,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
 
             if (wordsPair == null) {
                 binding.textView.clear()
-                Toast.makeText(context, "слов нет...", Toast.LENGTH_SHORT).show()
+                showToast(context, "слов нет...")
                 return
             }
 
@@ -274,7 +283,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
             val rightWord = wordsPair.first
 
             rightIndex =
-                if (wordsPair.second.size == 2) 1
+                if (wordsPair.second.size == 1) 1
                 else random.nextInt(wordsPair.second.size)
 
             wordsPair.second.add(rightIndex, rightWord)
@@ -282,24 +291,27 @@ class QuizFragment : Fragment(), View.OnClickListener,
 
             if (countVariants > 4) countVariants = 4
 
-            for (elem in 0 until countVariants) {
+
+            var elem = 0
+            while (elem < countVariants) {
                 val button = answerButtons[elem]
 
                 button.show()
                 button.text = wordsPair.second[elem]
 
-                val params = button.layoutParams as GridLayout.LayoutParams
+                val params = button.layoutParams as ConstraintLayout.LayoutParams
 
-//                if (wordsPair.second.size.isOdd() && elem == wordsPair.second.lastIndex)
-//                    params.horizontalBias = 0.5f
-//                else
-//                    params.horizontalBias = (0.1 + 0.8 * (elem % 2)).toFloat()
-//                params.verticalBias = (0.65 + 0.2 * (elem / 2)).toFloat()
-//
-//                button.layoutParams = params
+                if (wordsPair.second.size.isOdd() && elem == wordsPair.second.lastIndex)
+                    params.horizontalBias = 0.5f
+                else
+                    params.horizontalBias = 0.1f + 0.8f * (elem % 2)
+                params.verticalBias = 0.1f + 0.5f * (elem / 2)
+
+                button.layoutParams = params
+
+                elem++
             }
 
-            var elem = wordsPair.second.size
             while (elem < 4) {
                 answerButtons[elem++].hide()
             }
@@ -437,7 +449,7 @@ class QuizFragment : Fragment(), View.OnClickListener,
 
     override fun onChronometerTick(chronometer: Chronometer) {
         if (currentTime == 0) {
-            Toast.makeText(activity, getString(R.string.time_is_over), Toast.LENGTH_SHORT).show()
+            showToast(activity, R.string.time_is_over)
             endGame()
         }
 

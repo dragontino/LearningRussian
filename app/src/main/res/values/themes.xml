@@ -27,9 +27,8 @@
         <item name="android:colorForeground">@android:color/darker_gray</item>
     </style>
 
-    <!--TODO удалить-->
     <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/pink</item>
+        <item name="colorAccent">@color/raspberry</item>
     </style>
 
     <style name="TabStyle" parent="Widget.Design.TabLayout">
@@ -52,14 +51,14 @@
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 
-    <style name="AnswerButtonsStyle">
+    <style name="AnswerButtonsStyle" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/xarrovv</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">25sp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:layout_margin">25dp</item>
-        <item name="android:background">@drawable/button_style_dark</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/button_background_night</item>
         <item name="android:visibility">gone</item>
     </style>
 

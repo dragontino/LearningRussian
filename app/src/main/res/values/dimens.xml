@@ -8,4 +8,5 @@
     <dimen name="text_view_corner">7dp</dimen>
     <dimen name="seek_bar_thickness">2dp</dimen>
     <dimen name="seek_bar_thumb_size">15dp</dimen>
+    <dimen name="button_corner">14dp</dimen>
 </resources>

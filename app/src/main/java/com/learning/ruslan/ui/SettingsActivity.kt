@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.learning.ruslan.*
 import com.learning.ruslan.databinding.ActivitySettingsBinding
 import com.learning.ruslan.settings.*
@@ -128,6 +127,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
         binding.run {
 
             autoUpdate.isChecked = settings.baseSettings.isChecked
+            showingButtonBackground.isChecked = settings.baseSettings.showingButtonBackground
 
             switchTheme.setOnClickListener(this@SettingsActivity)
             buttonLanguage.setOnClickListener(this@SettingsActivity)
@@ -141,12 +141,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
             seekQuestions.progress = settings.baseSettings.questions
 
             buttonLanguage.setText(R.string.button_language_text)
-            buttonLanguage.background = ContextCompat
-                .getDrawable(this@SettingsActivity, R.drawable.button_style_light)
-
-
-            buttonLanguage.setTypeface(Typeface.createFromAsset(assets, "fonts/xarrovv.otf"),
-                Typeface.BOLD)
+            buttonLanguage.setBackgroundResource(R.drawable.button_background_light)
 
             seekPause.doOnProgressChanged { _, progress, _ ->
                 editPause.txt = progress.toString()
@@ -167,13 +162,12 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
                         ).show()
 
                         text.toInt() !in SettingsViewModel.minTime until SettingsViewModel.maxTime -> {
-                            Toast.makeText(
+                            showToast(
                                 this@SettingsActivity,
                                 getString(R.string.lim_of_time,
                                     SettingsViewModel.minTime,
                                     SettingsViewModel.maxTime),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            )
                             editPause.clear()
                         }
                         else -> {
@@ -205,13 +199,12 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
                             Toast.LENGTH_SHORT
                         ).show()
                         text.toInt() !in 10 until seekQuestions.max -> {
-                            Toast.makeText(
+                            showToast(
                                 this@SettingsActivity,
                                 getString(R.string.lim_of_questions,
                                     MIN_QUESTIONS,
                                     seekQuestions.max),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            )
                             editQuestions.clear()
                         }
                         else -> {
@@ -226,9 +219,13 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
             }
 
 
-            autoUpdate.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                switchChecked(isChecked)
+            autoUpdate.switch {
+                switchChecked(it)
                 isSettingsChanged = true
+            }
+
+            showingButtonBackground.switch {
+                settings.updateShowingButtonBackground(it)
             }
         }
     }
@@ -297,6 +294,7 @@ class SettingsActivity : AppCompatActivity(), View.OnClickListener, Theme {
                 editPause.backgroundTint = it
                 editQuestions.textColor = it
                 editQuestions.backgroundTint = it
+                showingButtonBackground.textColor = it
                 switchTheme.textColor = it
             }
 

@@ -11,7 +11,8 @@ class Settings(
     var pause: Int = 1600,
     var questions: Int = 10,
     var themeString: String? = Themes.SYSTEM.themeName,
-    var languageString: String? = Languages.RUSSIAN.languageName) {
+    var languageString: String? = Languages.RUSSIAN.languageName,
+    var showingButtonBackground: Boolean = true) {
 
     var theme: Themes
         get() =

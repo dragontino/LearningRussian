@@ -92,6 +92,21 @@
         <include
             layout="@layout/divider_view"/>
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/showing_button_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:visibility="visible"
+            android:layout_margin="@dimen/layout_margin"
+            android:gravity="center"
+            android:text="@string/button_background_text"
+            android:textSize="@dimen/text_size"
+            android:theme="@style/SwitchTheme" />
+
+        <include
+            layout="@layout/divider_view"/>
+
         <TextView
             android:id="@+id/switch_theme"
             android:layout_width="match_parent"
@@ -108,6 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layout_margin"
             android:visibility="gone"
+            android:fontFamily="@font/xarrovv"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textSize="23sp"/>
     </LinearLayout>

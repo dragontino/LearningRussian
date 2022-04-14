@@ -24,7 +24,7 @@ class Paronym(id: Int, word: String, var variants: String, var alternatives: Str
     )
 
     @Ignore
-    constructor(params: Array<String>) : this(params[0], params[1], params[2])
+    constructor(params: List<String>) : this(params[0], params[1], params[2])
 
     val arrayVariants get() = variants.split(split)
 

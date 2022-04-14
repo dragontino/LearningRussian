@@ -17,7 +17,7 @@
     <string name="settings_saved">Settings saved!</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Version 5.8.4 of april 12, 2022</string>
+    <string name="version">Version 6.1.0 of april 14, 2022</string>
 
     <!--Кнопки и надписи на экране упражнения-->
     <string name="btn_start">Start</string>
@@ -63,6 +63,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_ok">OK</string>
     <string name="changing_theme_time">sunrise and sunset time</string>
+    <string name="button_background_text">Background of answer buttons in the test section</string>
 
 
 </resources>

@@ -1,6 +1,6 @@
 ext {
-    defaultVersionName = '6.0.0'
-    defaultVersionCode = 6
+    defaultVersionName = '6.1.0'
+    defaultVersionCode = 7
 }
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

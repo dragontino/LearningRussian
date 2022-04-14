@@ -21,9 +21,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.learning.ruslan.MainDatabase
 import com.learning.ruslan.Pair
 import com.learning.ruslan.R
+import com.learning.ruslan.databases.MainDatabase
 import com.learning.ruslan.settings.EnumPreferences.*
 import java.util.*
 
@@ -51,9 +51,9 @@ class SettingsViewModel(private val mApplication: Application) :
             }
         }
 
-        fun Int.reverseColor() = if (this == Color.WHITE)
-            Color.BLACK
-        else Color.WHITE
+        fun @receiver:ColorInt Int.reverse() =
+            if (this == Color.WHITE) Color.BLACK
+            else Color.WHITE
     }
 
     private val settingsRepository: SettingsRepository
@@ -84,9 +84,7 @@ class SettingsViewModel(private val mApplication: Application) :
     @ColorInt var scoreColor = mApplication.getColor(R.color.score_light)
     var textAlpha = 0.5f
 
-
-    // TODO: 11.04.2022 добавить возможность отключать задний фон у кнопок
-    @DrawableRes var buttonBackgroundRes = R.drawable.button_style_dark
+    @DrawableRes var textViewBackgroundRes = R.drawable.text_view_style
 
 
     init {
@@ -170,6 +168,9 @@ class SettingsViewModel(private val mApplication: Application) :
     fun updateLanguages(language: String) =
         settingsRepository.updateLanguages(language)
 
+    fun updateShowingButtonBackground(showingButtonBackground: Boolean) =
+        settingsRepository.updateShowingButtonBackground(showingButtonBackground)
+
 
     fun getIndexTheme() = Themes.values().indexOf(theme)
 
@@ -197,7 +198,7 @@ class SettingsViewModel(private val mApplication: Application) :
         textAlpha = 0.5f
         redColor = mApplication.getColor(R.color.red_light)
         scoreColor = mApplication.getColor(R.color.score_light)
-        buttonBackgroundRes = R.drawable.button_style_dark
+        textViewBackgroundRes = R.drawable.text_view_style
     }
     else {
         fontColor = Color.WHITE
@@ -206,7 +207,7 @@ class SettingsViewModel(private val mApplication: Application) :
         redColor = mApplication.getColor(R.color.red_dark)
         scoreColor = mApplication.getColor(R.color.score_dark)
         textAlpha = 1f
-        buttonBackgroundRes = R.drawable.button_style_light
+        textViewBackgroundRes = R.drawable.text_view_dark_style
     }
 
 

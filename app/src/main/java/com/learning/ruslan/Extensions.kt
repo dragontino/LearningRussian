@@ -10,12 +10,11 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.text.toSpannable
 import androidx.core.widget.TextViewCompat
 import androidx.viewpager2.widget.ViewPager2
@@ -144,3 +143,15 @@ fun List<String>.draw(@ColorInt color: Int, startIndex: Int = 0, lastIndex: Int 
 
     return result.toSpannable()
 }
+
+
+inline fun SwitchCompat.switch(crossinline action: (Boolean) -> Unit) =
+    setOnCheckedChangeListener { _, isChecked -> action(isChecked) }
+
+
+
+fun showToast(context: Context?, text: String) =
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+
+fun showToast(context: Context?, @StringRes text: Int) =
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()

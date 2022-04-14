@@ -35,6 +35,15 @@ class TaskRepository(private val taskDao: TaskDao) {
         }
     }
 
+    fun getTask(taskType: TaskType, word: String) = taskDao.run {
+        when (taskType) {
+            TaskType.Assent -> getAssent(word)
+            TaskType.Suffix -> getSuffix(word)
+            TaskType.Paronym -> getParonym(word)
+            TaskType.SteadyExpression -> getExpression(word)
+        }
+    }
+
     fun searchTask(taskType: TaskType, query: String?) = taskDao.run {
         if (query == null || query.isBlank())
             return@run getTaskList(taskType)

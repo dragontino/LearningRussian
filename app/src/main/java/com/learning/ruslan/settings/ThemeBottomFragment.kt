@@ -114,13 +114,8 @@ class ThemeBottomFragment(activity: AppCompatActivity, private val theme: Theme)
             start.textColor = it
             end.textColor = it
         }
-
-        val backgroundRes = if (settings.isLightTheme())
-            R.drawable.text_view_style
-        else R.drawable.text_view_dark_style
-
-        start.setBackgroundResource(backgroundRes)
-        end.setBackgroundResource(backgroundRes)
+        start.setBackgroundResource(settings.textViewBackgroundRes)
+        end.setBackgroundResource(settings.textViewBackgroundRes)
     }
 
     private fun getStringFromCalendar(calendar: Calendar): String {

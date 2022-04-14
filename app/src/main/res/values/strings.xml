@@ -11,6 +11,7 @@
     <string name="lim_of_time">Значение должно лежать в пределах от %1$d мс до %2$d мс</string>
     <string name="questions_count">Количество вопросов в разделе «тест»</string>
     <string name="lim_of_questions">Количество вопросов должно быть от %1$d до %2$d</string>
+    <string name="button_background_text">Включить задний фон кнопок в разделе «Тест»</string>
     <string name="theme_label">Тёмная тема: %s</string>
     <string name="button_language_text">🌎 Язык</string>
     <string name="settings_saved">Настройки успешно сохранены!</string>
@@ -24,7 +25,7 @@
     <string name="end_time">Время заката</string>
 
     <!--Экран "О приложении"-->
-    <string name="version">Версия 6.0.0 от 12 апреля 2022</string>
+    <string name="version">Версия 6.1.0 от 14 апреля 2022</string>
     <string name="feedback"><b><i>Обратная связь</i></b></string>
     <string name="vk">Вконтакте</string>
     <string name="telegram">Телеграм</string>

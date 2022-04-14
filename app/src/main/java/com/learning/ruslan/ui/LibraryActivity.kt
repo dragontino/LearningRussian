@@ -132,12 +132,12 @@ class LibraryActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: LibraryHolder, position: Int) {
-            val w = if (searchResults.isEmpty())
+            val word = if (searchResults.isEmpty())
                 taskViewModel.getWord(typeId, position, settings.highlightColor)
             else
                 searchResults[position]
 
-            holder.bindWord(w, position)
+            holder.bindWord(word)
         }
 
         override fun getItemCount() = if (searchResults.isEmpty())
@@ -149,8 +149,6 @@ class LibraryActivity : AppCompatActivity() {
     private inner class LibraryHolder(private val itemBinding: ListItemLibraryBinding):
         RecyclerView.ViewHolder(itemBinding.root), View.OnClickListener {
 
-        private var pos = 0
-
         init {
             if (typeId == TaskType.Paronym) {
                 itemBinding.root.setOnClickListener(this)
@@ -159,20 +157,18 @@ class LibraryActivity : AppCompatActivity() {
             else itemBinding.textView.setTextIsSelectable(true)
         }
 
-        fun bindWord(word: Spannable, position: Int) {
+        fun bindWord(word: Spannable) {
             itemBinding.run {
                 textView.text = word
                 textView.setTextColor(settings.fontColor)
                 textView.setBackgroundColor(settings.backgroundColor)
             }
-            this.pos = position
         }
 
         override fun onClick(v: View) {
             val intent = ParonymActivity.getIntent(
                 this@LibraryActivity,
-                itemBinding.textView.text.toString(),
-                pos
+                itemBinding.textView.text.toString()
             )
             startActivity(intent)
         }

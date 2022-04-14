@@ -22,6 +22,9 @@ class SettingsRepository(private val settingsDao: SettingsDao) {
     fun updateLanguages(language: String) =
         settingsDao.updateLanguages(language)
 
+    fun updateShowingButtonBackground(showingButtonBackground: Boolean) =
+        settingsDao.updateShowingButtonBackground(showingButtonBackground)
+
 //    fun getLiveSettings() = settingsDao.getSettings()
 
     fun getSettings() =

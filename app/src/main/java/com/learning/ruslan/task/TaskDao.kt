@@ -62,6 +62,18 @@ interface TaskDao {
     @Query("SELECT * FROM ExpressionTable WHERE id = :position + 1")
     fun getExpression(position: Int): SteadyExpression
 
+    @Query("SELECT * FROM AssentTable WHERE word = :word")
+    fun getAssent(word: String): Assent
+
+    @Query("SELECT * FROM SuffixTable WHERE word = :word")
+    fun getSuffix(word: String): Suffix
+
+    @Query("SELECT * FROM ParonymTable WHERE word = :word")
+    fun getParonym(word: String): Paronym
+
+    @Query("SELECT * FROM ExpressionTable WHERE word = :word")
+    fun getExpression(word: String): SteadyExpression
+
 
     /**
      *

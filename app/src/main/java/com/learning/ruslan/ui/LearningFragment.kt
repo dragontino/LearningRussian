@@ -29,8 +29,8 @@ class LearningFragment private constructor(): Fragment(), View.OnClickListener {
             return fragment
         }
 
-        fun Bundle?.getType(key: String) =
-            this?.getSerializable(key) as TaskType?
+        fun Bundle?.getType(key: String, defValue: TaskType) =
+            this?.getSerializable(key) as TaskType? ?: defValue
     }
 
 
@@ -95,7 +95,7 @@ class LearningFragment private constructor(): Fragment(), View.OnClickListener {
 
         taskViewModel = TaskViewModel.getInstance(this)
         settings = SettingsViewModel.getInstance(this)
-        type = arguments.getType(ActivityId) ?: TaskType.Assent
+        type = arguments.getType(ActivityId, TaskType.Assent)
 
 //        settings.observeSettings(this)
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.learning.ruslan.*
+import com.learning.ruslan.databases.MainDatabase
 import kotlin.random.Random
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,12 +26,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         val taskDao = MainDatabase.getDatabase(mApplication).taskDao()
         taskRepository = TaskRepository(taskDao)
 
-        if (!isUploaded)
-            TaskType.values().forEach {
-                uploadWords(it)
-                isUploaded = true
-            }
-
+        if (!isUploaded) {
+            TaskType.values().forEach { uploadWords(it) }
+            isUploaded = true
+        }
     }
 
     private fun uploadWords(taskType: TaskType) {
@@ -47,7 +46,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
                 TaskType.Assent -> Assent(it.lowercase(), pos)
                 // TODO: 08.04.2022 сделать альтернативные буквы
                 TaskType.Suffix -> Suffix(it.lowercase(), pos, "")
-                TaskType.Paronym -> Paronym(it.split(":").toTypedArray())
+                TaskType.Paronym -> Paronym(it.split(":"))
                 TaskType.SteadyExpression -> SteadyExpression(it)
             }
 
@@ -109,6 +108,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
             }
             TaskType.Suffix -> null
             TaskType.Paronym -> {
+                // TODO: 14.04.2022 не работает
                 val paronym = getTask(taskType, index) as Paronym
 
                 val phrase = paronym.removeWordFromPhrase(highlightColor)
@@ -137,8 +137,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getTask(taskType: TaskType, position: Int) =
+    private fun getTask(taskType: TaskType, position: Int) =
         taskRepository.getTask(taskType, position)
+
+    fun getTask(taskType: TaskType, word: String) =
+        taskRepository.getTask(taskType, word)
 
 
     // тоже самое, что и снизу. Если позиция == null, подставляется позиция прописной буквы
@@ -290,14 +293,6 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    // тоже самое, что и выше, но без объекта класса task
-    private fun String.removeExtraWords(): String {
-        val pos = findUpper(this)
-        if (pos < 0) return this
-
-        return Task(this, pos).removeExtraWords().word
-    }
-
     /**
      * возвращает словарь, ключём которого является индекс правильной буквы,
      * а значением – массив, содержащий индексы гласных букв в слове
@@ -306,8 +301,12 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     private fun getVowelIndexes(word: String, indexOfRightLetter: Int): Pair<Int, List<Int>>? {
         val indexes = ArrayList<Int>()
 
-        if ("отзыв" in word)
-            return Pair(0, arrayListOf(3))
+        if ("отзыв" in word) {
+            return if ("посла" in word)
+                Pair(3, arrayListOf(0))
+            else
+                Pair(0, arrayListOf(3))
+        }
 
         for (elem in word.indices) {
             if (word.substring(elem, elem + 1).matches(Regex("^(?ui:[аеёиоуыэюя]).*")) &&
@@ -403,6 +402,15 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
             "ненадОлго", "тОтчас")
 
 
+        // TODO: 14.04.2022 сделать альтернативные буквы
+        /* нужно записать альтернативные буквы:
+        у - а
+        ю - я
+        я - ю, е
+        и - е
+        е - и
+        а - у, ю
+        */
 
         private val suffixWords = arrayOf("брезжУщий", "зыблЮщийся", "зиждУщийся", "внемлЮщий",
             "приемлЕмый", "неотъемлЕмый", "незыблЕмый", "движИмый – от «движити»",

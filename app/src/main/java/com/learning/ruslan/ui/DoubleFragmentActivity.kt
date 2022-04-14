@@ -50,7 +50,7 @@ class DoubleFragmentActivity : AppCompatActivity() {
         setTitle(typeId.title)
 
         val sectionsPagerAdapter =
-            if (typeId == TaskType.SteadyExpression)
+            if (typeId == TaskType.SteadyExpression || typeId == TaskType.Suffix)
                 SectionsPagerAdapter(this, typeId, tabCount = 1)
             else
                 SectionsPagerAdapter(this, typeId)

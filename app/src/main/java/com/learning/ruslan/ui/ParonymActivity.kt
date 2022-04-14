@@ -19,19 +19,15 @@ import com.learning.ruslan.task.TaskViewModel
 class ParonymActivity : AppCompatActivity() {
 
     companion object {
-        private const val KEY_POS = "KEY_POS"
         private const val KEY_WORD = "KEY_WORD"
-        fun getIntent(context: Context, word: String, position: Int) =
-            createIntent<ParonymActivity>(context) {
-                putExtra(KEY_WORD, word)
-                putExtra(KEY_POS, position)
-            }
+        fun getIntent(context: Context, word: String) =
+            createIntent<ParonymActivity>(context) { putExtra(KEY_WORD, word) }
     }
 
     private lateinit var binding: ActivityParonymBinding
     private lateinit var settings: SettingsViewModel
     private lateinit var taskViewModel: TaskViewModel
-    private var positionInBase = 0
+    private lateinit var paronym: Paronym
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,10 +38,11 @@ class ParonymActivity : AppCompatActivity() {
 
         settings = SettingsViewModel.getInstance(this)
         taskViewModel = TaskViewModel.getInstance(this)
-        positionInBase = intent.getIntExtra(KEY_POS, 0)
-        val title = intent.getStringExtra(KEY_WORD, "")
 
-        setTitle(title)
+        val word = intent.getStringExtra(KEY_WORD, "")
+        paronym = taskViewModel.getTask(TaskType.Paronym, word) as Paronym
+
+        title = word
 
         binding.paronymRecyclerView.adapter = ParonymAdapter()
 
@@ -63,15 +60,12 @@ class ParonymActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ParonymHolder, position: Int) {
-            val paronym = taskViewModel.getTask(TaskType.Paronym, positionInBase) as Paronym
             val phrase = taskViewModel.paintParonym(paronym, settings.highlightColor, position)
             holder.bindParonym(phrase)
         }
 
-        override fun getItemCount(): Int {
-            val paronym = taskViewModel.getTask(TaskType.Paronym, positionInBase) as Paronym
-            return paronym.arrayVariants.size
-        }
+        override fun getItemCount() =
+            paronym.arrayVariants.size
     }
 
 

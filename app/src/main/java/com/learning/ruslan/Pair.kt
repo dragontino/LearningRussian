@@ -14,7 +14,6 @@ operator fun <T>Pair<T, T>.get(index: Int) =
 
 
 fun <A, B: Iterable<A>> Pair<A, B>.toList(): List<A> {
-
     val result: ArrayList<A> = arrayListOf(first)
     result.addAll(second)
     return result

@@ -26,6 +26,9 @@ interface SettingsDao {
     @Query("UPDATE SettingsTable SET languageString = :language")
     fun updateLanguages(language: String)
 
+    @Query("UPDATE SettingsTable SET showingButtonBackground = :showingButtonBackground")
+    fun updateShowingButtonBackground(showingButtonBackground: Boolean)
+
     @Query("SELECT * FROM SettingsTable")
     fun getSettings(): Settings? //LiveData<Settings?>
 
